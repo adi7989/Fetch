@@ -3,17 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Data from API</title>
+    <title>User Directory | API Dashboard</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Leaflet CSS for maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
     <div class="container">
-        <h1>User Data</h1>
-        <button id="reload-btn">Reload Data</button>
+        <div class="header">
+            <div class="title-section">
+                <h1>User Directory</h1>
+                <p class="subtitle">Interactive dashboard with user data from JSONPlaceholder API</p>
+            </div>
+            <div class="controls">
+                <button id="reload-btn" class="btn btn-primary">
+                    <i class="fas fa-sync-alt"></i> Reload Data
+                </button>
+                <button id="export-btn" class="btn btn-secondary">
+                    <i class="fas fa-file-export"></i> Export
+                </button>
+                <div class="view-toggle">
+                    <button id="grid-view-btn" class="view-btn active">
+                        <i class="fas fa-th"></i>
+                    </button>
+                    <button id="list-view-btn" class="view-btn">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
+                <div class="theme-toggle">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="theme-toggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="toggle-label">Dark Mode</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="search-input" class="search-input" placeholder="Search users by name, email, or company...">
+        </div>
+
         <div id="error-message" class="error-message"></div>
-        <div id="loading" class="loading">Loading...</div>
+
+        <div id="stats-container" class="stats-container">
+            <div class="stat-card">
+                <div class="stat-value" id="total-users">0</div>
+                <div class="stat-label">Total Users</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="companies-count">0</div>
+                <div class="stat-label">Companies</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="cities-count">0</div>
+                <div class="stat-label">Cities</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="websites-count">0</div>
+                <div class="stat-label">Websites</div>
+            </div>
+        </div>
+
+        <div id="loading" class="loading">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading user data...</div>
+        </div>
+
         <div id="user-container" class="user-grid"></div>
+        <div id="user-list" class="user-list"></div>
+
+        <div id="pagination" class="pagination"></div>
     </div>
+
+    <!-- User Details Modal -->
+    <div id="user-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">User Details</h2>
+                <button class="close-modal" id="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- User details will be inserted here -->
+            </div>
+            <div id="map-container" class="map-container"></div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="close-modal-btn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaflet JS for maps -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Main script -->
     <script src="script.js"></script>
 </body>
 </html>
